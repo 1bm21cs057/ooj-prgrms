@@ -59,14 +59,24 @@ class Sav_acc extends Account
 }
 class Cur_acc extends Account
 {
-	void min_balance()
+	double check_amt;
+	
+	void debit_check()
 	{
-		if(balance<1000) 
+		System.out.print("Enter the check amount: "); 
+		Scanner s=new Scanner(System.in);
+		check_amt = s.nextDouble();
+		if(check_amt>balance-10000) 
 		{
-			System.out.println("Rupees 100 penalty imposed"); 
-			balance=balance-100;
+			System.out.println("Rupees 1000 penalty imposed...Is it ok to proceed? Enter y for yes and n for no"); 
+			String option=s.next();
+			if(option.equals("y")) {balance=balance-check_amt-1000;}
+			else {System.out.println("no check debited");}
 		}
-		else{System.out.println("No penalty imposed");}
+		else
+		{
+			System.out.println("Rupees "+check_amt+" debited"); balance-=check_amt;
+		}
 	}
 	void withdraw()
 	{
@@ -107,7 +117,7 @@ class Bank
 		
 		
 		
-		System.out.print("Enter the choice: \n2a.Set the values for current account\n2b. display\n2c. deposit\n2d. minBalance\n2e. Withdraw\n2f. exit\n");
+		System.out.print("Enter the choice: \n2a.Set the values for current account\n2b. display\n2c. deposit\n2d. transferCheck\n2e. Withdraw\n2f. exit\n");
 		op2=s.next();
 		switch(op2)
 		{
@@ -117,7 +127,7 @@ class Bank
 				  break;
 			case "2c":c1.deposit();
 				  break;
-			case "2d":c1.min_balance();
+			case "2d":c1.(debit_check);
 				  break;
 			case "2e":c1.withdraw();
 				  break;
